@@ -1,0 +1,62 @@
+html {
+  background-image: radial-gradient(rgba(0, 101, 0, 0.8), black 120%);
+  height: 100vh;
+  color: #55e418;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 400;
+  font-family: "Arsenal";
+  min-width: 430px;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-flow: column;  
+  padding: 3rem;
+  margin-top: -4rem;
+}
+
+h1 {
+  background-color: rgb(8, 36, 60);
+  padding: 2%;
+  box-shadow: 2px 5px #0f1022;
+  border-radius: 1rem;
+}
+
+main {
+  display: inline-flex;
+  flex-flow: column;
+  justify-content: center;
+  align-content: center;   
+  max-width: 75%;  
+}
+
+h2 {
+  background-image: linear-gradient(rgb(98, 192, 221), rgb(29, 120, 168));
+  color: rgb(7, 26, 19);
+  font-style: italic;
+  border-radius: 1em;
+  padding: 2.5rem;
+  border-style: none;
+  box-shadow: 2px 5px;   
+}
+
+button {
+  text-align: center;  
+  background-color: rgb(61, 187, 137);
+  color: rgb(12, 35, 15);
+  border-radius: 1em;
+  padding: 0.5rem;
+  border-style: none;
+  font-family: "Arsenal";
+  font-size: x-large;
+  font-weight: bolder;
+  box-shadow: 2px 5px; 
+  margin-bottom: 0.5rem;   
+}
+
+button:hover {
+  background-color: rgb(122, 225, 179);
+}

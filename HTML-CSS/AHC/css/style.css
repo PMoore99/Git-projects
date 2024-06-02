@@ -1,0 +1,281 @@
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 30px;
+  background-color: rgba(168, 51, 32, 1);
+  color: honeydew;
+  font-family: "Arsenal";
+  text-align: center;
+}
+
+/* Desktop */
+
+.header-container {
+  position: fixed;
+  left: -0.1rem;
+  top: 0rem;
+  width: 100%;
+  z-index: 2;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(255, 228, 0, 1) 0%, rgba(211, 116, 17, 1) 40%, rgba(168, 51, 32, 1) 100%);
+}
+
+
+.logo {
+  height: 2.5rem;
+  width: auto;
+  margin-top: 0.2rem;
+  margin-left: 0.5rem;
+  min-width: 2rem;
+}
+
+.header-container h1 {
+  margin: 0;
+  padding-left: 2rem;
+}
+
+nav ul {
+  list-style: none;
+  padding-right: 1rem;
+  display: flex;
+}
+
+nav li {
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+
+a {
+  text-decoration: none;
+  color: honeydew;
+}
+
+a:hover {
+  font-weight: bold;
+}
+
+nav a::before {
+  display: block;
+  content: attr(title);
+  font-weight: bold;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.banner {
+  height: 24rem;
+  background-image: url("../images/chinese-bridge-river-bure-blickling.jpg");
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 3rem;
+}
+
+.mission-text {
+  background-color: rgba(31, 171, 120, 0.8);
+  border-radius: 30px;
+  width: 60%;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  position: relative;
+  top: 6rem;
+}
+
+.mission-text h4 {
+  margin-top: -0.75rem;
+}
+
+img {
+  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+  border: 3px solid #666;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  border-radius: 25px;
+}
+
+.flex img:hover {
+  border: 3px solid rgb(220, 7, 7);
+}
+
+.main {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255, 228, 0, 1) 0%, rgba(211, 116, 17, 1) 40%, rgba(168, 51, 32, 1) 100%);
+}
+
+#hikes {
+  margin-top: -1.25rem;
+}
+
+.main h2 {
+  padding: 0.5rem;
+  background: linear-gradient(180deg, rgba(255, 228, 0, 1) 0%, rgba(211, 116, 17, 1) 40%, rgba(168, 51, 32, 1) 100%);
+}
+
+.container {
+  display: grid;
+  justify-content: space-around;
+  width: 100%;
+  column-gap: 0.5rem;
+  flex: 1 1;
+  margin: 0 auto;
+}
+
+.container1 {
+  grid-template-columns: 16fr 10fr;
+}
+
+.flex,
+.grid {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+h5 {
+  margin-top: -.05rem;
+}
+
+.land_imgs {
+  height: 20rem;
+}
+
+.port_imgs {
+  height: 31.4rem;
+}
+
+.container2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.sights-imgs {
+  height: 20rem;
+}
+
+footer {
+  line-height: 0.3rem;
+  background-color: #0065C4;
+  padding: 0.5rem 0;
+  color: honeydew;
+}
+
+footer a {
+  color: honeydew;
+}
+
+/* Tablet */
+
+@media only screen and (min-width: 641px) and (max-width: 1024px) {
+
+  html {
+    font-size: 26px;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .header-container {
+    flex-direction: column;
+  }
+
+  .logo {
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+  }
+
+  nav li {
+    background-color: #0065C4;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    padding: 2px 20px 6px 20px;
+  }
+
+  nav a {
+    color: honeydew;
+  }
+
+  .container2 {
+    display: grid;
+    grid-template: repeat(2, auto) / repeat(3, auto);
+  }
+
+  .sights-imgs {
+    height: 12rem;
+  }
+}
+
+/* Mobile */
+
+@media only screen and (max-width: 640px) {
+
+  html {
+    font-size: 18px;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  header {
+    height: 19rem;
+    min-width: 8rem;
+  }
+
+  .header-container {
+    flex-direction: column;
+    position: static;
+    z-index: 0;
+  }
+
+  .header-container h1 {
+    min-width: 10rem;
+    padding: 0;
+  }
+
+  .logo {
+    position: absolute;
+    left: 0.3rem;
+    top: 0.6rem;
+    height: 1.5rem;
+    width: auto;
+    min-width: 0;
+  }
+
+  nav ul {
+    flex-direction: column;
+    margin-right: 2rem;
+  }
+
+  nav li {
+    background-color: #0065C4;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    padding: 0.8rem 8rem;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  nav li:hover {
+    background-color: #5e9bea;
+  }
+
+  nav a {
+    color: honeydew;
+  }
+
+  .container {
+    display: block;
+  }
+
+  .flex {
+    display: block;
+  }
+}

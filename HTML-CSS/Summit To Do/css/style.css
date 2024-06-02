@@ -1,0 +1,307 @@
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 30px;
+  background-color: rgb(4, 41, 61);
+  color: honeydew;
+  font-family: "Genos";
+  text-align: center;  
+}
+
+/* Desktop */
+
+.header-container {
+  height: 3rem;
+  box-shadow: 3px 5px rgba(70, 177, 27, 0.5);
+  border-radius: 10px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: linear-gradient(to top, rgb(4, 41, 61), rgb(31, 85, 171));  
+}
+
+
+.logo {
+  height: 4rem;
+  width: auto;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.header-container h1 {
+  margin: 0;
+  min-width: 12rem;
+  padding-left: 2rem;
+}
+
+nav ul {
+  list-style: none;
+  padding-right: 1rem;
+  display: flex;
+}
+
+nav li {
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+a {
+  text-decoration: none;
+  color: honeydew;
+}
+
+a:hover {
+  font-weight: bold;
+}
+
+nav a::before {
+  display: block;
+  content: attr(title);
+  font-weight: bold;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.banner {
+  height: 20rem;
+  background-image: url("../images/background_resize.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 0.5rem;  
+}
+
+.mission {
+  display: flex;
+  height: 30%;
+}
+
+.mission-text {
+  background-color: rgba(31, 85, 171, 0.6);
+  border-radius: 10px;
+  line-height: 40%;
+  padding: 0.5rem 0;
+}
+
+.mission-text p {
+  font-size: 0.5rem;
+}
+
+.mission-text span {
+  vertical-align: super;
+  font-size: 0.5rem;
+}
+
+img {
+  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+}
+
+.main {
+  width: 100%;
+  background-image: linear-gradient(to top, rgb(4, 41, 61), rgb(31, 85, 171));  
+}
+
+#trips {
+  margin-top: -1.25rem;
+}
+
+.main h2 {
+  padding-top: 0.5rem;
+}
+
+.container1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.flex1 {  
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.products {
+  width: 16rem;
+  height: 10.7rem;
+}
+
+.flex img {
+  border: 2px solid transparent;
+}
+
+.flex img:hover {
+  border: 2px solid rgb(9, 8, 101);
+}
+
+.flex1 h4 {
+  margin-top: -0.25rem;
+}
+
+#everest {
+  margin-left: 1rem;
+}
+
+.container2 {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-image: url("../images/background2_resize.jpg");
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;  
+}
+
+.people {
+  height: 10rem;
+}
+
+.flex2 {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 2rem;
+  height: 14rem;
+}
+
+.flex2 h5,
+.flex2 h6 {
+  background-image: linear-gradient(to top, rgba(4, 41, 61, 0.7), rgba(31, 85, 171, 0.7));
+  padding-bottom: 3px;
+}
+
+.flex2 h5 {
+  margin-top: -0.15rem;
+}
+
+.flex2 h6 {
+  margin-top: -1.3rem;
+}
+
+footer {
+  line-height: 0.3rem;
+  background-image: linear-gradient(to top, rgb(4, 41, 61), rgb(31, 85, 171));
+  padding-top: 0.5rem;  
+}
+
+#copy {
+  text-align: left;
+}
+
+/* Tablet */
+
+@media only screen and (min-width: 641px) and (max-width: 1024px) {
+
+  html {
+    font-size: 26px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    box-shadow: 1px 3px rgba(70, 177, 27, 0.5);
+  }
+
+  .logo {
+    position: absolute;
+    left: 0;
+    top: -0.5rem;
+  }
+
+  nav li {
+    background-color: rgb(31, 85, 171);
+    border-radius: 10px;
+    margin-top: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    padding: 2px 20px 6px 20px;
+  }
+
+  .container2 {
+    display: grid;
+    grid-template: repeat(2, auto) / repeat(3, auto);
+  }
+
+  .people {
+    height: 12rem;
+  }
+
+  .biotext {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+/* Mobile */
+
+@media only screen and (max-width: 640px) {
+
+  html {
+    font-size: 18px;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  header {
+    height: 19rem;
+    min-width: 8rem;
+  }
+
+  .header-container {
+    flex-direction: column;
+  }
+
+  .header-container h1 {
+    min-width: 10rem;
+    padding: 0;
+  }
+
+  .logo {
+    position: absolute;
+    left: 0;
+    top: -0.5rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    margin-right: 2rem;
+  }
+
+  nav li {
+    background-color: rgb(31, 85, 171);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    padding: 0.8rem 8rem;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  nav li:hover {
+    background-color: #5e9bea;
+  }
+
+  .flex1 {
+    display: block;
+  }
+
+  .products {
+    width: 22rem;
+    height: 13.75rem;    
+  }  
+
+  .container2 {
+    display: grid;
+    grid-template: repeat(2, auto) / repeat(3, auto);    
+  }
+  
+  .people {
+    height: 8rem;
+  }
+}

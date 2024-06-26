@@ -1,0 +1,24 @@
+.loginContainer {
+  background-color: aquamarine;
+  margin-top: 10%;
+  display: inline-block;
+  padding: 1rem;
+  border-radius: 2rem;
+  animation: pulse 5s infinite;
+}
+
+.loginContainer a {
+  font-family: "Space Grotesk", sans-serif;
+  color: rgb(234, 223, 223);
+  text-decoration: none;
+  font-size: larger;  
+}
+
+@keyframes pulse {
+  0%, 100% {
+    background-color: rgba(4, 41, 61);
+  }
+  50% {
+    background-color: rgb(16, 60, 45);
+  }
+}

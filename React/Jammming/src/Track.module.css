@@ -1,0 +1,16 @@
+.name {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #f2ebc4
+}
+
+.year {
+  font-size: 0.8rem;
+  font-style: bold;
+  margin-right: 1%;
+}
+
+.addToPlayListBtn img {
+  width: 25px;
+  height: 25px;
+}

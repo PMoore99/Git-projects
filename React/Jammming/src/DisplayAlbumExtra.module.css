@@ -1,0 +1,40 @@
+.return {
+  margin-bottom: -6rem;
+}
+
+.return:hover {
+  cursor: pointer;
+  color: rgb(254, 186, 186);
+}
+
+.img1 {
+  position: relative;
+  bottom: 50px;
+  margin-left: 5%;
+  float: left;
+  width: 7rem;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+.img2 {
+  position: relative;
+  bottom: 50px;
+  margin-right: 5%;
+  float: right;
+  width: 7rem;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+@media (max-width: 866px) {
+  html {
+    font-size: 10px;    
+  }
+
+  .img1,
+  .img2 {
+    display: none;
+  }
+}

@@ -1,0 +1,104 @@
+.searchBarContainer {
+  margin-top: -0.5rem;
+}
+
+.search {
+  width: 16rem;
+  height: 1rem;
+  background-color: rgb(2, 21, 1);
+  border-radius: 10px;
+  color: rgb(254, 186, 186);
+  font-size: 0.7rem;
+  caret-color:rgb(212, 211, 187);
+  border: 1px solid transparent;
+}
+
+.search:focus {
+  outline: none !important;
+  border: 1px solid red;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.searchBtn {
+  position: relative;
+  top: 5px;
+  margin-left: 0.2rem;
+  cursor: pointer;
+  appearance: none;
+  background-color: inherit;
+  transition: transform 1s ease-in-out;
+  padding: 5px;
+  border: none;
+}
+
+.searchBtn:hover {
+  transform: rotate(180deg);
+}
+
+.searchBtn img {
+  width: 35px;
+  height: 30px;
+}
+
+.radioButtonContainer {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 0.4rem;  
+  margin-left: -0.4rem;
+  margin-bottom: -0.8rem;
+}
+
+.radioButton {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.radioButtonInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radioButtonLabel {
+  display: inline-block;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  position: relative;
+  font-size: 0.7rem;
+  color: #f2f2f2;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.radioButtonCustom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  transition: all 0.3s ease;
+}
+
+.radioButtonInput:checked+.radioButtonLabel .radioButtonCustom {
+  background-color: rgb(254, 186, 186);
+  border-color: transparent;
+  transform: scale(0.8);
+  box-shadow: 0 0 20px #4c8bf580;
+}
+
+.radioButtonInput:checked+.radioButtonLabel {
+  color: rgb(254, 186, 186);
+}
+
+.radioButtonLabel:hover .radioButtonCustom {
+  transform: scale(1.2);
+  border-color: #4c8bf5;
+  box-shadow: 0 0 20px #4c8bf580;
+}

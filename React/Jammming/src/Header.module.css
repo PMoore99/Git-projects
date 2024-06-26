@@ -1,0 +1,21 @@
+.title {
+  text-align: left;
+  margin-top: -0.5rem;
+  margin-left: 1.8rem;
+  margin-bottom: -1rem;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 0.2rem;
+  font-size: 36pt;
+  color: rgb(254, 186, 186);
+}
+
+.explain img {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  top: 10px;  
+  appearance: none;
+  background-color: inherit;  
+  padding: 5px;
+  border: none;
+}

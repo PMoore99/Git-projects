@@ -9,6 +9,7 @@
   gap: 5px;
   max-height: 70vh;
   margin-right: 3%;
+  margin-left: 5%;
   overflow-y: scroll;
   line-height: 0.8rem;
 }

@@ -2,6 +2,10 @@
   margin-top: 0.5rem;
 }
 
+.label {
+  font-size: 0.8rem;
+}
+
 .upload {
   width: 10rem;
   height: 1rem;

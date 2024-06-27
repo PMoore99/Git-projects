@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
-import { ids } from "./SpotifyKeys";
 import LoginToSpotify from "./LoginToSpotify";
 import Header from "./Header";
 import SearchAlbums from "./SearchAlbums";
@@ -10,7 +9,6 @@ import Playlist from "./Playlist";
 import PlaylistUpload from "./PlaylistUpload";
 
 function App() {
-  const clientId = ids.clientId;
   const spotifyApi = "https://api.spotify.com/v1/";
   const [accessToken, setAccessToken] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,6 +24,7 @@ function App() {
   const [playlistId, setPlaylistId] = useState("");
   const [playlistUploadString, setPlaylistUploadString] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [userId, setUserId] = useState("");
   const tokenFlag = useRef(false);
 
   useEffect(() => {
@@ -50,16 +49,14 @@ function App() {
 
   const handleSearchTerm = e => {
     e.preventDefault();
-    console.log(e)
     setSearchTerm(e.target.value);
   }
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(e);
     if (toggleComponents === "albumInfo") {
       setToggleComponents("albums");
-    }    
+    }
     if (e.target[2].checked === true) {
       searchArtist();
     } else if (e.target[3].checked === true) {
@@ -125,14 +122,15 @@ function App() {
   }
 
   const handleAlbumClick = e => {
-    console.log(e);
     e.preventDefault();
     e.persist();
-    if (e.target.name) 
-      {setClickedAlbum(e.target.name);}
-    else if (e.target.attributes[2].value)
-       {setClickedAlbum(e.target.attributes[2].value);}
-    else console.log("Help!!!")
+    if (e.target.name) {
+      setClickedAlbum(e.target.name);
+    }
+    else if (e.target.attributes[2].value) {
+      setClickedAlbum(e.target.attributes[2].value);
+    }
+    else console.log("Error!")
   }
 
   useEffect(() => {
@@ -150,11 +148,7 @@ function App() {
             }
             catch (error) {
               console.log(error);
-              if (error.staus < 500) {
-                tokenFlag.current = true;
-              } else {
-                alert("Spotify server error!")
-              }
+              tokenFlag.current = true;
             }
           })
       }
@@ -193,13 +187,13 @@ function App() {
       const trackObject = trackArray[0];
       const currentPlaylist = playlist;
       if (currentPlaylist.length > 0) {
-        setPlaylist([...currentPlaylist, trackObject]);                
+        setPlaylist([...currentPlaylist, trackObject]);
       } else {
-        setPlaylist([trackObject]);        
+        setPlaylist([trackObject]);
       }
     } else {
       console.log("Error!");
-    }    
+    }
   }
 
   const handleClearPlaylist = () => {
@@ -210,7 +204,7 @@ function App() {
   const handleAddAll = () => {
     const currentPlaylist = playlist;
     displayedTracks.map(track => currentPlaylist.push(track));
-    setPlaylist(currentPlaylist);    
+    setPlaylist(currentPlaylist);
   }
 
   const handleRemove = e => {
@@ -231,82 +225,91 @@ function App() {
 
   useEffect(() => {
     if (playlist.length > 0) {
-      console.log(playlist);
       const trackIds = playlist.map(track => track.id);
       const trackString = trackIds.join(",spotify:track:");
-      console.log(trackString);
       setPlaylistUploadString(trackString);
     }
   }, [playlist])
 
   const handlePlaylistUpload = async e => {
     e.preventDefault();
-    console.log(e);
     if (e.target[3].checked === true) {
       setIsPublic(false);
     } else if (e.target[4].checked === true) {
       setIsPublic(true);
     }
 
-    const createOnServerParams = {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer' + accessToken
-      },
-      body: btoa(JSON.stringify(
-        {
-          "name": playlistName,
-          "description": playlistDescription,
-          "public": isPublic
-        }))
-    };
-
-    const createOnServer = await fetch(`${spotifyApi}users/${clientId}/playlists`, createOnServerParams)
+    const getId = await fetch(`https://api.spotify.com/v1/me`, searchParams)
       .then(response => response.json())
       .then(data => {
         console.log(data);
         try {
-          if (data.error) {
-            console.log("Whoops!");
-          } else {
-            return data.id;
-          }
+          tokenFlag.current = false;
+          return data.id;
         }
         catch (error) {
           console.log(error);
+          tokenFlag.current = true;
+        }
+      })
+    setUserId(getId);
+
+    const createOnServerParams = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer" + accessToken
+      },
+      body: JSON.stringify(
+        {
+          name: playlistName,
+          description: playlistDescription,
+          public: isPublic
+        })
+    };
+
+    const createOnServer = await fetch(`${spotifyApi}users/${userId}/playlists`, createOnServerParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        try {
+          tokenFlag.current = false;
+          return data.id;
+        }
+        catch (error) {
+          console.log(error);
+          tokenFlag.current = true;
         }
       });
     setPlaylistId(createOnServer);
 
     const uploadPlaylist = async () => {
-      await fetch(`${spotifyApi}playlists/${playlistId}/tracks?uris=spotify:track:${playlistUploadString}`, {
+      await fetch(`${spotifyApi}playlists/${playlistId}/tracks`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + accessToken
-        }
+        },
+        body: JSON.stringify({
+          uris: `spotify:track:${playlistUploadString}`
+        })
       })
         .then(response => response.json())
         .then(data => {
           console.log(data);
           try {
-            if (data.error) {
-              console.log("Whoops again!");
-            } else {
-              alert("Upload successful!");
-            }
+            tokenFlag.current = false;
+            alert("Upload successful!");
           }
           catch (error) {
-            alert("Oh no!")
             console.log(error);
+            tokenFlag.current = true;
+            alert("Oh no!");
           }
         });
     }
     uploadPlaylist();
   }
-
-  console.log(playlist);
 
   useEffect(() => {
     if (playlist.length > 0) {

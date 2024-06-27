@@ -6,8 +6,7 @@ import Track from "./Track";
 export default function DisplayAlbum(props) {
   try {
     console.log(props);
-    const tracks = props.albumDetails.tracks.items;
-    console.log(tracks);
+    const tracks = props.albumDetails.tracks.items;  
     return (
       <div className={styles.results}>
         {tracks.map((track, index) => {

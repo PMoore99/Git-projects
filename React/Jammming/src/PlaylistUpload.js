@@ -6,9 +6,9 @@ export default function PlaylistUpload(props) {
   console.log(props);
   return (
     <form className={styles.uploadContainer} onSubmit={props.onSubmit} name="uploadPlaylist" >
-      <label htmlFor="name">Playlist Name: </label>
+      <label htmlFor="name" className={styles.label}>Playlist Name: </label>
       <input type="text" name="uploadPlaylist" id="name" className={styles.upload} value={props.playlistName} onChange={props.onNaming} />
-      <label htmlFor="description">Description: </label>
+      <label htmlFor="description" className={styles.label}>Description: </label>
       <input type="text" name="uploadPlaylist" id="description" className={styles.upload} value={props.playlistDescription} onChange={props.onDescription} />
       <button type="submit" name="uploadPlaylist" className={styles.uploadBtn} ><img src={upload} alt="up-loading.png" /></button>
 

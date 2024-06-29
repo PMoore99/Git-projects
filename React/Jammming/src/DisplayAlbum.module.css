@@ -65,6 +65,13 @@
   display: inline-flex;
   justify-content: right;
   margin-right: 5lvw;
+  border: 2px solid transparent;
+}
+
+.trackContainer:hover {
+  border: 2px solid rgb(98, 17, 20);
+  cursor: pointer;
+  background-color: #7fff0011;
 }
 
 .addAll {

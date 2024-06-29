@@ -15,25 +15,24 @@ function App() {
   const [artistImageUrl, setArtistImageUrl] = useState("");
   const [albums, setAlbums] = useState([]);
   const [clickedAlbum, setClickedAlbum] = useState("");
-  const [albumDetails, setAlbumDetails] = useState({});
+  const [albumPic, setAlbumPic] = useState("");
   const [displayedTracks, setDisplayedTracks] = useState([]);
   const [toggleComponents, setToggleComponents] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState("");
   const [playlistDescription, setPlaylistDescription] = useState("");
-  const [playlistId, setPlaylistId] = useState("");
   const [playlistUploadString, setPlaylistUploadString] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-  const [userId, setUserId] = useState("");
   const tokenFlag = useRef(false);
 
   useEffect(() => {
     const oldToken = window.localStorage.getItem("token");
-    if (window.location.href.match("http://localhost:3000/#access_token")) {
+    if (window.location.href.match("http://localhost:3000/#access_token") || window.location.href.match("http://192.168.1.11:3000/#access_token")) {
       const newToken = window.location.href.match(/=([^&]*)/)[1];
       window.localStorage.setItem("token", newToken);
       setAccessToken(newToken);
-    } else if (!oldToken || window.location.href === "http://localhost:3000/") {
+    } else if (!oldToken || window.location.href === "http://localhost:3000/" || window.location.href === "http://192.168.1.11:3000/") {
       tokenFlag.current = true;
     }
     else {
@@ -123,7 +122,6 @@ function App() {
 
   const handleAlbumClick = e => {
     e.preventDefault();
-    e.persist();
     if (e.target.name) {
       setClickedAlbum(e.target.name);
     }
@@ -142,7 +140,7 @@ function App() {
             console.log(data);
             try {
               tokenFlag.current = false;
-              setAlbumDetails(data);
+              setAlbumPic(data.images[1].url);
               setDisplayedTracks(data.tracks.items);
               setToggleComponents("albumInfo");
             }
@@ -154,8 +152,6 @@ function App() {
       }
     })();
   }, [clickedAlbum, searchParams])
-
-  console.log(albumDetails);
 
   const searchTracks = async () => {
     const getTracks = await fetch(`${spotifyApi}search?q=${searchTerm}&type=track&limit=30&market=gb`, searchParams)
@@ -175,36 +171,35 @@ function App() {
     setDisplayedTracks(getTracks);
   }
 
-  const addToPlaylist = e => {
+  const addToPlaylist = track => {
+    const trackId = track;
+    const trackArray = displayedTracks.filter(track => track.id === trackId);
+    const trackObject = trackArray[0];
+    const currentPlaylist = playlist;
+    if (currentPlaylist.length > 0) {
+      setPlaylist([...currentPlaylist, trackObject]);
+    } else {
+      setPlaylist([trackObject]);
+    }
+  }
+
+  const handleAddToPlaylist = e => {
     if (e.target.parentNode.name) {
-      const trackId = e.target.parentNode.name;
-      let trackArray = [];
-      if (toggleComponents === "albumInfo") {
-        trackArray = albumDetails.tracks.items.filter(track => track.id === trackId);
-      } else {
-        trackArray = displayedTracks.filter(track => track.id === trackId);
-      }
-      const trackObject = trackArray[0];
-      const currentPlaylist = playlist;
-      if (currentPlaylist.length > 0) {
-        setPlaylist([...currentPlaylist, trackObject]);
-      } else {
-        setPlaylist([trackObject]);
-      }
+      addToPlaylist(e.target.parentNode.name);
     } else {
       console.log("Error!");
     }
   }
 
+  const handleAddAll = () => {
+    const currentPlaylist = playlist;
+    const newPlaylist = currentPlaylist.concat(displayedTracks);
+    setPlaylist(newPlaylist);
+  }
+
   const handleClearPlaylist = () => {
     window.localStorage.setItem("playlist", JSON.stringify([]));
     setPlaylist([]);
-  }
-
-  const handleAddAll = () => {
-    const currentPlaylist = playlist;
-    displayedTracks.map(track => currentPlaylist.push(track));
-    setPlaylist(currentPlaylist);
   }
 
   const handleRemove = e => {
@@ -239,76 +234,39 @@ function App() {
       setIsPublic(true);
     }
 
-    const getId = await fetch(`https://api.spotify.com/v1/me`, searchParams)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        try {
-          tokenFlag.current = false;
-          return data.id;
-        }
-        catch (error) {
-          console.log(error);
-          tokenFlag.current = true;
-        }
-      })
-    setUserId(getId);
-
     const createOnServerParams = {
-      method: "POST",
       header: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer" + accessToken
+        "Authorization": "Bearer " + accessToken
       },
+      method: "POST",
       body: JSON.stringify(
         {
-          name: playlistName,
-          description: playlistDescription,
-          public: isPublic
+          "name": playlistName,
+          "description": playlistDescription,
+          "public": isPublic
         })
     };
 
-    const createOnServer = await fetch(`${spotifyApi}users/${userId}/playlists`, createOnServerParams)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        try {
-          tokenFlag.current = false;
-          return data.id;
-        }
-        catch (error) {
-          console.log(error);
-          tokenFlag.current = true;
-        }
-      });
-    setPlaylistId(createOnServer);
-
-    const uploadPlaylist = async () => {
-      await fetch(`${spotifyApi}playlists/${playlistId}/tracks`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + accessToken
-        },
-        body: JSON.stringify({
-          uris: `spotify:track:${playlistUploadString}`
-        })
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          try {
-            tokenFlag.current = false;
-            alert("Upload successful!");
-          }
-          catch (error) {
-            console.log(error);
-            tokenFlag.current = true;
-            alert("Oh no!");
-          }
+    return await fetch("https://api.spotify.com/v1/me", searchParams
+    ).then(response => response.json()
+    ).then(jsonResponse => {
+      const userId = jsonResponse.id;
+      setCurrentUser(userId);
+      return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, createOnServerParams
+      ).then(response => response.json()
+      ).then(jsonResponse => {
+        const playlistId = jsonResponse.id;
+        return fetch(`${spotifyApi}playlists/${playlistId}/tracks`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + accessToken
+          },
+          method: "POST",
+          body: JSON.stringify({ uris: `spotify:track:${playlistUploadString}` })
         });
-    }
-    uploadPlaylist();
+      });
+    });
   }
 
   useEffect(() => {
@@ -323,15 +281,15 @@ function App() {
     <>
       <div id="header">
         <Header onChange={handleSearchTerm} searchTerm={searchTerm} onSubmit={handleSubmit} />
-        {toggleComponents === "albumInfo" ? <DisplayAlbumExtra artistPic={artistImageUrl} albumDetails={albumDetails} onClickBack={handleBack} />
+        {toggleComponents === "albumInfo" ? <DisplayAlbumExtra artistPic={artistImageUrl} albumPic={albumPic} onClickBack={handleBack} />
           : <></>}
       </div>
       <div id="content">
         {toggleComponents === "albums" ? <SearchAlbums onClick={handleAlbumClick} albums={albums} />
           : <></>}
-        {toggleComponents === "albumInfo" ? <DisplayAlbum onClickAddAll={handleAddAll} onAddPlaylist={addToPlaylist} albumDetails={albumDetails} />
+        {toggleComponents === "albumInfo" ? <DisplayAlbum onClickAddAll={handleAddAll} onAddPlaylist={handleAddToPlaylist} displayedTracks={displayedTracks} />
           : <></>}
-        {toggleComponents === "tracks" ? <Tracklist displayedTracks={displayedTracks} onAddPlaylist={addToPlaylist} />
+        {toggleComponents === "tracks" ? <Tracklist displayedTracks={displayedTracks} onAddPlaylist={handleAddToPlaylist} />
           : <></>}
         {playlist.length === 0 ? <></> : <Playlist playlist={playlist} onClickClear={handleClearPlaylist} onClickRemove={handleRemove} />}
       </div>

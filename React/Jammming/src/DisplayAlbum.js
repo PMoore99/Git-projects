@@ -6,12 +6,12 @@ import Track from "./Track";
 export default function DisplayAlbum(props) {
   try {
     console.log(props);
-    const tracks = props.albumDetails.tracks.items;  
+    const tracks = props.displayedTracks;  
     return (
       <div className={styles.results}>
         {tracks.map((track, index) => {
           return (
-            <div className={styles.trackContainer}>
+            <div className={styles.trackContainer} key={"container" + index}>
               <Track track={track} key={track.id + index}/>
               <button type="submit" className={styles.addToPlayListBtn} onClick={props.onAddPlaylist} name={track.id} key={"name" + index}><img src={add} alt="add.png" key={"img" + index } /></button>
             </div>

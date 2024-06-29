@@ -10,10 +10,10 @@ export default function Playlist(props) {
     <div className={styles.results}>
       {tracks.map((track, index) => {
         return (
-          <div className={styles.trackContainer}>
-            <Track track={track} />
+          <div className={styles.trackContainer} key={index}>
+            <Track track={track} key={track.id}/>
             <p className={styles.artistName} key={"artist" + index}>&nbsp;{track.artists[0].name}</p>
-            <button type="submit" className={styles.minusToPlayListBtn} onClick={props.onClickRemove} name={track.id} key={track.id}><img src={minus} alt="minus.png" key={"img" + { index }} /></button>
+            <button type="submit" className={styles.minusToPlayListBtn} onClick={props.onClickRemove} name={track.id} key={"minus" + track.id}><img src={minus} alt="minus.png" key={"img" + { index }} /></button>
           </div>
         )
       })}
